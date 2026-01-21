@@ -11,6 +11,7 @@ class Staff extends Model
         'name',
         'job_title',
         'image',
+        'status',
         'created_by',
     ];
 

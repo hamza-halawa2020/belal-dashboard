@@ -12,11 +12,13 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -37,6 +39,8 @@ class StaffResource extends Resource
                     ->required(),
                 TextInput::make('job_title')
                     ->required(),
+                    Toggle::make('status')
+                    ->required(),
                 FileUpload::make('image')
                     ->image()
                     ->required(),
@@ -52,6 +56,9 @@ class StaffResource extends Resource
                 ImageEntry::make('image'),
                 TextEntry::make('user.name')
                     ->numeric(),
+                    
+                        IconEntry::make('status')
+                    ->boolean(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -66,6 +73,9 @@ class StaffResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
+                
+                    IconColumn::make('status')
+                    ->boolean(),
                 TextColumn::make('job_title')
                     ->searchable(),
                 ImageColumn::make('image'),

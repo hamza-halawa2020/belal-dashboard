@@ -20,7 +20,9 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Infolists\Components\IconEntry;
 class SuccessPartnerResource extends Resource
 {
     protected static ?string $model = SuccessPartner::class;
@@ -37,6 +39,8 @@ class SuccessPartnerResource extends Resource
                     ->required(),
                 TextInput::make('link')
                     ->required(),
+                    Toggle::make('status')
+                    ->required(),
                 FileUpload::make('image')
                     ->image()
                     ->required(),
@@ -52,6 +56,8 @@ class SuccessPartnerResource extends Resource
                 ImageEntry::make('image'),
                 TextEntry::make('user.name')
                     ->numeric(),
+                     IconEntry::make('status')
+                    ->boolean(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -70,6 +76,8 @@ class SuccessPartnerResource extends Resource
                     ->searchable(),
                 TextColumn::make('link')
                     ->searchable(),
+                    IconColumn::make('status')
+                    ->boolean(),
                 ImageColumn::make('image'),
                 TextColumn::make('user.name')
                     ->numeric()

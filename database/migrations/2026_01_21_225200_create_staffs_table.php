@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('job_title');
             $table->string('image');
+            $table->boolean('status')->default(false);
             $table->foreignIdFor(User::class,'created_by')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

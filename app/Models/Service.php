@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SuccessPartner extends Model
+class Service extends Model
 {
-    protected $table = 'success_partners';
+    protected $table = 'services';
     protected $fillable = [
-        'name',
-        'link',
+        'title',
+        'description',
         'image',
         'status',
         'created_by',
