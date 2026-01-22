@@ -23,4 +23,10 @@ class Category extends Model
     {
         return $this->hasMany(FeasibilityStudy::class,'category_id');
     }
+    
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
 }

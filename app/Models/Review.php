@@ -18,4 +18,9 @@ class Review extends Model
     {
         return $this->belongsTo(User::class,'approved_by');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }

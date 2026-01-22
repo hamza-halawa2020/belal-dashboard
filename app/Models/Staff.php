@@ -19,4 +19,9 @@ class Staff extends Model
     {
         return $this->belongsTo(User::class,'created_by');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }
