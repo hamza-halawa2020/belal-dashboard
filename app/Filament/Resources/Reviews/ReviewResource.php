@@ -31,18 +31,33 @@ class ReviewResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('Review');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Reviews');
+    }
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
                 Textarea::make('review')
+                    ->label(__('Review'))
                     ->required()
                     ->columnSpanFull(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
                 Hidden::make('approved_by')
+                    ->label(__('Approved By'))
                     ->dehydrated()
                     ->dehydrateStateUsing(fn ($state, $get) => $get('status') ? auth()->id() : null),
             ]);
@@ -52,17 +67,19 @@ class ReviewResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
+                TextEntry::make('name')
+                    ->label(__('Name')),
                 TextEntry::make('review')
+                    ->label(__('Review'))
                     ->columnSpanFull(),
                 IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -74,17 +91,16 @@ class ReviewResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('User'))
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

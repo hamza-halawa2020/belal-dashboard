@@ -34,19 +34,33 @@ class InvestmentOpportunityResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getModelLabel(): string
+    {
+        return __('InvestmentOpportunity');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('InvestmentOpportunities');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label(__('Title'))
                     ->required(),
                 RichEditor::make('description')
+                    ->label(__('Description'))
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
             ]);
     }
@@ -55,16 +69,22 @@ class InvestmentOpportunityResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
+                TextEntry::make('title')
+                    ->label(__('Title')),
                 TextEntry::make('description')
-                ->html()
-                ->columnSpanFull(),
-                ImageEntry::make('image'),
+                    ->label(__('Description'))
+                    ->html()
+                    ->columnSpanFull(),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
 
@@ -77,17 +97,23 @@ class InvestmentOpportunityResource extends Resource
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Description'))
                     ->html()
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

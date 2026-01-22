@@ -34,19 +34,34 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getModelLabel(): string
+    {
+        return __('Post');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Posts');
+    }
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label(__('Title'))
                     ->required(),
                 RichEditor::make('description')
+                    ->label(__('Description'))
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
             ]);
     }
@@ -55,16 +70,22 @@ class PostResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
+                TextEntry::make('title')
+                    ->label(__('Title')),
                 TextEntry::make('description')
+                    ->label(__('Description'))
                     ->html()
                     ->columnSpanFull(),
-                ImageEntry::make('image'),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -76,17 +97,23 @@ class PostResource extends Resource
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Description'))
                     ->html()
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

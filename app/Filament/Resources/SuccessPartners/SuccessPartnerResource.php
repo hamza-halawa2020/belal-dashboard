@@ -31,17 +31,32 @@ class SuccessPartnerResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('SuccessPartner');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('SuccessPartners');
+    }
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
                 TextInput::make('link')
+                    ->label(__('Link'))
                     ->required(),
                     Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
             ]);
@@ -51,17 +66,20 @@ class SuccessPartnerResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('link'),
-                ImageEntry::make('image'),
+                TextEntry::make('name')
+                    ->label(__('Name')),
+                TextEntry::make('link')
+                    ->label(__('Link')),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                      IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -73,20 +91,22 @@ class SuccessPartnerResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 TextColumn::make('link')
+                    ->label(__('Link'))
                     ->searchable(),
                     IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

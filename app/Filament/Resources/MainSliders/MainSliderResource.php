@@ -32,17 +32,35 @@ class MainSliderResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+        public static function getModelLabel(): string
+    {
+        return __('MainSlider');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('MainSliders');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('title'),
-                TextInput::make('description'),
-                TextInput::make('link'),
+                TextInput::make('title')
+                    ->label(__('Title'))
+                    ->required(),
+                TextInput::make('description')
+                    ->label(__('Description'))
+                    ->required(),
+                TextInput::make('link')
+                    ->label(__('Link'))
+                    ->required(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
             ]);
     }
@@ -52,17 +70,24 @@ class MainSliderResource extends Resource
         return $schema
             ->components([
                 TextEntry::make('title')
+                    ->label(__('Title'))
                     ->placeholder('-'),
                 TextEntry::make('description')
+                    ->label(__('Description'))
                     ->placeholder('-'),
                 TextEntry::make('link')
+                    ->label(__('Link'))
                     ->placeholder('-'),
-                ImageEntry::make('image'),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -74,18 +99,25 @@ class MainSliderResource extends Resource
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Description'))
                     ->searchable(),
                 TextColumn::make('link')
+                    ->label(__('Link'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

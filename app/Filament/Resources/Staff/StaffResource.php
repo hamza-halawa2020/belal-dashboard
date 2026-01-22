@@ -31,17 +31,32 @@ class StaffResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('Staff');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Staffs');
+    }
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
                 TextInput::make('job_title')
+                    ->label(__('Job Title'))
                     ->required(),
                     Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
             ]);
@@ -51,15 +66,20 @@ class StaffResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('job_title'),
-                ImageEntry::make('image'),
+                TextEntry::make('name')
+                    ->label(__('Name')),
+                TextEntry::make('job_title')
+                    ->label(__('Job Title')),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
-                    
-                        IconEntry::make('status')
+                IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
 
@@ -72,17 +92,22 @@ class StaffResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
-                
-                    IconColumn::make('status')
+                IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('job_title')
+                    ->label(__('Job Title'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

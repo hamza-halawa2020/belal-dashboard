@@ -31,16 +31,29 @@ class FaqResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'question';
 
+     public static function getModelLabel(): string
+    {
+        return __('Faq');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Faqs');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('question')
+                    ->label(__('Question'))
                     ->required(),
                 RichEditor::make('answer')
+                    ->label(__('Answer'))
                     ->required()
                     ->columnSpanFull(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
             ]);
     }
@@ -49,15 +62,20 @@ class FaqResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('question'),
+                TextEntry::make('question')
+                    ->label(__('Question')),
                 TextEntry::make('answer')
+                    ->label(__('Answer'))
                     ->html()
                     ->columnSpanFull(),
                 IconEntry::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
         
@@ -70,14 +88,17 @@ class FaqResource extends Resource
             ->recordTitleAttribute('question')
             ->columns([
                 TextColumn::make('question')
+                    ->label(__('Question'))
                     ->searchable()
                     ->html(),
                 IconColumn::make('status')
+                    ->label(__('Status'))
                     ->boolean(),
                 TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('User'))
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

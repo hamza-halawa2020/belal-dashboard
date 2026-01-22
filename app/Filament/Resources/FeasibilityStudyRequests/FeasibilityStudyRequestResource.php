@@ -27,16 +27,29 @@ class FeasibilityStudyRequestResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('FeasibilityStudyRequest');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('FeasibilityStudyRequests');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
                 TextInput::make('phone')
+                    ->label(__('Phone'))
                     ->tel()
                     ->required(),
                 Textarea::make('message')
+                    ->label(__('Message'))
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -46,14 +59,15 @@ class FeasibilityStudyRequestResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('phone'),
+                TextEntry::make('name')
+                    ->label(__('Name')),
+                TextEntry::make('phone')
+                    ->label(__('Phone')),
                 TextEntry::make('message')
+                    ->label(__('Message'))
                     ->columnSpanFull(),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -65,14 +79,13 @@ class FeasibilityStudyRequestResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label(__('Phone'))
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

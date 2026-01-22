@@ -32,16 +32,29 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Categories');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label(__('Title'))
                     ->required(),
                 FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image()
                     ->required(),
                 Toggle::make('status')
+                    ->label(__('Status'))
                     ->required(),
             ]);
     }
@@ -50,13 +63,18 @@ class CategoryResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
-                ImageEntry::make('image'),
+                TextEntry::make('title')
+                    ->label(__('Title')),
+                ImageEntry::make('image')
+                    ->label(__('Image')),
                 IconEntry::make('status')
-                    ->boolean(),
+                    ->boolean()
+                    ->label(__('Status')),
                 TextEntry::make('user.name')
+                    ->label(__('User'))
                     ->numeric(),
                 TextEntry::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);
@@ -68,14 +86,19 @@ class CategoryResource extends Resource
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 IconColumn::make('status')
-                    ->boolean(),
+                    ->boolean()
+                    ->label(__('Status')),
                 TextColumn::make('user.name')
+                    ->label(__('User'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
