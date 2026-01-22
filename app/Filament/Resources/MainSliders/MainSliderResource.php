@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\InvestmentOpportunities;
+namespace App\Filament\Resources\MainSliders;
 
-use App\Filament\Resources\InvestmentOpportunities\Pages\ManageInvestmentOpportunities;
-use App\Models\InvestmentOpportunity;
+use App\Filament\Resources\MainSliders\Pages\ManageMainSliders;
+use App\Models\MainSlider;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -12,7 +12,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
@@ -24,11 +23,10 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Forms\Components\RichEditor;
 
-class InvestmentOpportunityResource extends Resource
+class MainSliderResource extends Resource
 {
-    protected static ?string $model = InvestmentOpportunity::class;
+    protected static ?string $model = MainSlider::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -38,11 +36,9 @@ class InvestmentOpportunityResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('title')
-                    ->required(),
-                RichEditor::make('description')
-                    ->required()
-                    ->columnSpanFull(),
+                TextInput::make('title'),
+                TextInput::make('description'),
+                TextInput::make('link'),
                 FileUpload::make('image')
                     ->image()
                     ->required(),
@@ -55,10 +51,12 @@ class InvestmentOpportunityResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
+                TextEntry::make('title')
+                    ->placeholder('-'),
                 TextEntry::make('description')
-                ->html()
-                ->columnSpanFull(),
+                    ->placeholder('-'),
+                TextEntry::make('link')
+                    ->placeholder('-'),
                 ImageEntry::make('image'),
                 IconEntry::make('status')
                     ->boolean(),
@@ -67,7 +65,6 @@ class InvestmentOpportunityResource extends Resource
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
-
             ]);
     }
 
@@ -79,7 +76,8 @@ class InvestmentOpportunityResource extends Resource
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('description')
-                    ->html()
+                    ->searchable(),
+                TextColumn::make('link')
                     ->searchable(),
                 ImageColumn::make('image'),
                 IconColumn::make('status')
@@ -110,7 +108,7 @@ class InvestmentOpportunityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageInvestmentOpportunities::route('/'),
+            'index' => ManageMainSliders::route('/'),
         ];
     }
 }

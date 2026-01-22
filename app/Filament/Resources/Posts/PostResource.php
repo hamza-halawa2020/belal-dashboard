@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\InvestmentOpportunities;
+namespace App\Filament\Resources\Posts;
 
-use App\Filament\Resources\InvestmentOpportunities\Pages\ManageInvestmentOpportunities;
-use App\Models\InvestmentOpportunity;
+use App\Filament\Resources\Posts\Pages\ManagePosts;
+use App\Models\Post;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -26,9 +26,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Components\RichEditor;
 
-class InvestmentOpportunityResource extends Resource
+class PostResource extends Resource
 {
-    protected static ?string $model = InvestmentOpportunity::class;
+    protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -57,8 +57,8 @@ class InvestmentOpportunityResource extends Resource
             ->components([
                 TextEntry::make('title'),
                 TextEntry::make('description')
-                ->html()
-                ->columnSpanFull(),
+                    ->html()
+                    ->columnSpanFull(),
                 ImageEntry::make('image'),
                 IconEntry::make('status')
                     ->boolean(),
@@ -67,7 +67,6 @@ class InvestmentOpportunityResource extends Resource
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
-
             ]);
     }
 
@@ -110,7 +109,7 @@ class InvestmentOpportunityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageInvestmentOpportunities::route('/'),
+            'index' => ManagePosts::route('/'),
         ];
     }
 }

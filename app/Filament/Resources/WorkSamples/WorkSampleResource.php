@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\InvestmentOpportunities;
+namespace App\Filament\Resources\WorkSamples;
 
-use App\Filament\Resources\InvestmentOpportunities\Pages\ManageInvestmentOpportunities;
-use App\Models\InvestmentOpportunity;
+use App\Filament\Resources\WorkSamples\Pages\ManageWorkSamples;
+use App\Models\WorkSample;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -26,9 +26,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Components\RichEditor;
 
-class InvestmentOpportunityResource extends Resource
+class WorkSampleResource extends Resource
 {
-    protected static ?string $model = InvestmentOpportunity::class;
+    protected static ?string $model = WorkSample::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -46,6 +46,19 @@ class InvestmentOpportunityResource extends Resource
                 FileUpload::make('image')
                     ->image()
                     ->required(),
+                TextInput::make('money_capital')
+                    ->required(),
+                TextInput::make('rate_of_return')
+                    ->required(),
+                RichEditor::make('services')
+                    ->required()
+                    ->columnSpanFull(),
+                RichEditor::make('study_content')
+                    ->required()
+                    ->columnSpanFull(),
+                RichEditor::make('financial_metrics')
+                    ->required()
+                    ->columnSpanFull(),
                 Toggle::make('status')
                     ->required(),
             ]);
@@ -57,9 +70,20 @@ class InvestmentOpportunityResource extends Resource
             ->components([
                 TextEntry::make('title'),
                 TextEntry::make('description')
-                ->html()
-                ->columnSpanFull(),
+                    ->html()
+                    ->columnSpanFull(),
                 ImageEntry::make('image'),
+                TextEntry::make('money_capital'),
+                TextEntry::make('rate_of_return'),
+                TextEntry::make('services')
+                    ->html()
+                    ->columnSpanFull(),
+                TextEntry::make('study_content')
+                    ->html()
+                    ->columnSpanFull(),
+                TextEntry::make('financial_metrics')
+                    ->html()
+                    ->columnSpanFull(),
                 IconEntry::make('status')
                     ->boolean(),
                 TextEntry::make('user.name')
@@ -67,7 +91,9 @@ class InvestmentOpportunityResource extends Resource
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
-
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
             ]);
     }
 
@@ -78,16 +104,21 @@ class InvestmentOpportunityResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('description')
-                    ->html()
-                    ->searchable(),
                 ImageColumn::make('image'),
+                TextColumn::make('money_capital')
+                    ->searchable(),
+                TextColumn::make('rate_of_return')
+                    ->searchable(),
                 IconColumn::make('status')
                     ->boolean(),
                 TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -110,7 +141,7 @@ class InvestmentOpportunityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageInvestmentOpportunities::route('/'),
+            'index' => ManageWorkSamples::route('/'),
         ];
     }
 }

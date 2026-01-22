@@ -1,53 +1,44 @@
 <?php
 
-namespace App\Filament\Resources\InvestmentOpportunities;
+namespace App\Filament\Resources\FeasibilityStudyRequests;
 
-use App\Filament\Resources\InvestmentOpportunities\Pages\ManageInvestmentOpportunities;
-use App\Models\InvestmentOpportunity;
+use App\Filament\Resources\FeasibilityStudyRequests\Pages\ManageFeasibilityStudyRequests;
+use App\Models\FeasibilityStudyRequest;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Forms\Components\RichEditor;
 
-class InvestmentOpportunityResource extends Resource
+class FeasibilityStudyRequestResource extends Resource
 {
-    protected static ?string $model = InvestmentOpportunity::class;
+    protected static ?string $model = FeasibilityStudyRequest::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('title')
+                TextInput::make('name')
                     ->required(),
-                RichEditor::make('description')
+                TextInput::make('phone')
+                    ->tel()
+                    ->required(),
+                Textarea::make('message')
                     ->required()
                     ->columnSpanFull(),
-                FileUpload::make('image')
-                    ->image()
-                    ->required(),
-                Toggle::make('status')
-                    ->required(),
             ]);
     }
 
@@ -55,39 +46,33 @@ class InvestmentOpportunityResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('title'),
-                TextEntry::make('description')
-                ->html()
-                ->columnSpanFull(),
-                ImageEntry::make('image'),
-                IconEntry::make('status')
-                    ->boolean(),
-                TextEntry::make('user.name')
-                    ->numeric(),
+                TextEntry::make('name'),
+                TextEntry::make('phone'),
+                TextEntry::make('message')
+                    ->columnSpanFull(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
-
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('title')
+            ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('title')
+                TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('description')
-                    ->html()
+                TextColumn::make('phone')
                     ->searchable(),
-                ImageColumn::make('image'),
-                IconColumn::make('status')
-                    ->boolean(),
-                TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -110,7 +95,7 @@ class InvestmentOpportunityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageInvestmentOpportunities::route('/'),
+            'index' => ManageFeasibilityStudyRequests::route('/'),
         ];
     }
 }
