@@ -7,6 +7,8 @@ use App\Http\Resources\Api\CategoryResource;
 
 class CategoryController extends ApiController
 {
+    protected array $with = ['feasibilityStudies'];
+
     public function __construct()
     {
         $this->model = Category::class;

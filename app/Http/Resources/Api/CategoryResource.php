@@ -14,6 +14,7 @@ class CategoryResource extends JsonResource
             'title' => $this->title,
             'image_url' => $this->image ? asset('storage/' . $this->image) : null,
             'status' => $this->status,
+            'feasibility_studies' => FeasibilityStudyResource::collection($this->whenLoaded('feasibilityStudies')),
         ];
     }
 }

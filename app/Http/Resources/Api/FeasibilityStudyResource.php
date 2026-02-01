@@ -20,9 +20,7 @@ class FeasibilityStudyResource extends JsonResource
             'study_content' => $this->study_content,
             'financial_metrics' => $this->financial_metrics,
             'status' => $this->status,
-            'category' => whenloaded($this->category, function () {
-                return new CategoryResource($this->category);
-            }),
+            'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }
 }
