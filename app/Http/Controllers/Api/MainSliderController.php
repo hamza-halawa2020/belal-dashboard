@@ -7,6 +7,8 @@ use App\Http\Resources\Api\MainSliderResource;
 
 class MainSliderController extends ApiController
 {
+    protected bool $paginate = false;
+
     public function __construct()
     {
         $this->model = MainSlider::class;

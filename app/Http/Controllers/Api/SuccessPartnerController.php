@@ -7,6 +7,8 @@ use App\Http\Resources\Api\SuccessPartnerResource;
 
 class SuccessPartnerController extends ApiController
 {
+    // protected bool $paginate = false;
+
     public function __construct()
     {
         $this->model = SuccessPartner::class;

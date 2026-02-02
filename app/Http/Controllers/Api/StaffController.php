@@ -7,6 +7,8 @@ use App\Http\Resources\Api\StaffResource;
 
 class StaffController extends ApiController
 {
+    protected bool $paginate = false;
+
     public function __construct()
     {
         $this->model = Staff::class;

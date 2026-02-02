@@ -31,6 +31,7 @@ Route::get('/investment-opportunities', [InvestmentOpportunityController::class,
 Route::get('/investment-opportunities/{id}', [InvestmentOpportunityController::class, 'show']);
 
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
 
 Route::get('/faqs', [FaqController::class, 'index']);
 

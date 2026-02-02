@@ -11,6 +11,8 @@ class ApiController extends Controller
     protected $resource;
 
     protected array $with = [];
+    protected bool $paginate = true;
+    protected int $perPage = 9;
 
     public function index(Request $request)
     {
@@ -20,7 +22,13 @@ class ApiController extends Controller
             $query->active();
         }
 
-        $items = $query->latest()->paginate($request->get('limit', 10));
+        if ($this->paginate) {
+            $items = $query->latest()->paginate(
+                $request->get('limit', $this->perPage)
+            );
+        } else {
+            $items = $query->latest()->get();
+        }
 
         return $this->resource::collection($items);
     }
@@ -28,8 +36,9 @@ class ApiController extends Controller
     public function show($id)
     {
         $item = $this->model::with($this->with)->findOrFail($id);
-        
+
         return new $this->resource($item);
     }
-
 }
+
+
